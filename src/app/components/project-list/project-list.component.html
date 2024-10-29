@@ -1,0 +1,66 @@
+<!-- <div>
+    <mat-card class="inboxAutoClear-master" fxLayout="column" fxLayoutGap="25px">
+        <mat-expansion-panel fxFlex="30">
+            <mat-expansion-panel-header class="bg-blue-500">
+                <mat-panel-title>
+                  Add Project
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <div class="mt-10">
+                <form [formGroup]="projectDetailsInputForm">
+                    <div fxLayout="row" fxLayoutAlign="space-between start">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Project Name</mat-label>
+                            <input matInput formControlName="projectName"/>
+                        </mat-form-field>
+                    </div>
+                </form>
+              </div>
+        </mat-expansion-panel>
+    </mat-card>
+</div> -->
+
+
+<div>
+    <div class="sticky top-0 bg-orange-500 text-white rounded-lg shadow-md flex items-center justify-between">
+        <div class="flex items-center space-x-4">
+            <button mat-icon-button aria-label="Add Project" (click)="onAddRow()">
+                <mat-icon>add_box</mat-icon>
+            </button>
+            <button mat-icon-button aria-label="Edit Project">
+                <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button aria-label="Delete Project">
+                <mat-icon>delete</mat-icon>
+            </button>
+            <button mat-icon-button aria-label="Save Project" (click)="onSave()">
+                <mat-icon>save</mat-icon>
+            </button>
+            <button mat-icon-button aria-label="Delete Project" (click)="refreshTable()">
+                <mat-icon>refresh</mat-icon>
+            </button>
+        </div>
+        <p class="text-lg text-center flex-1">Projects Data</p>
+    </div>
+</div>
+
+
+
+
+<div class="" style="height: 90%; width: 100%;">
+    <ag-grid-angular
+      style="width: 100%; height: 60%;"
+      class="ag-theme-quartz"
+      [columnDefs]="columnDefs"
+      [rowData]="rowData"
+      [editType]="editType"
+      [rowSelection]="rowSelection"
+      [gridOptions]="gridOptions"
+      [defaultColDef]="defaultColDef"
+      (cellValueChanged)="onCellValueChanged($event)"
+      (rowValueChanged)="onRowValueChanged($event)"
+      (gridReady)="onGridReady($event)"
+     >
+    </ag-grid-angular>
+  </div>
+  

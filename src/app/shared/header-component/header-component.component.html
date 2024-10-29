@@ -1,0 +1,91 @@
+
+  <nav class="bg-fuchsia-950 border border-fuchsia-950 px-2 sm:px-4 py-2.5  h-13 shadow">
+    <div class="container flex flex-wrap justify-between items-center ">
+     <div>
+       @if (isAuthenticated) {
+         <button mat-mini-fab  (click)="sidenav.toggle()"><mat-icon>menu</mat-icon></button>
+       }
+       <a href="/" class=" items-center">
+         <span class="self-center text-xl font-bold whitespace-nowrap text-white">
+           Task Management System
+         </span>
+           </a>
+     </div>
+    
+         <div class="w-full md:block md:w-auto hidden" id="mobile-menu">
+       <ul class="flex flex-col mt-4 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium">
+           <li>
+             <div fxLayout="row" fxLayoutAlign="center center" class="profile-detail" fxLayoutGap="15px">
+               @if (isAuthenticated) {
+                 <div  fxLayout="column">
+                   <button mat-fab class="profile-fab primary-color" [matMenuTriggerFor]="profileMenu">{{userInitials}}</button>
+                   <span class="text-white"> Welcome {{username}}</span>
+                 </div>
+                   
+                 <mat-menu #profileMenu="matMenu">
+                   <button mat-menu-item (click)="logout()">
+                     <mat-icon>settings_power</mat-icon>Log off
+                   </button>
+                 </mat-menu>
+               }@else {
+                 <a
+                   (click)="login()"
+                   class="block py-2 pr-4 pl-3 text-white hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">
+                   Login
+                 </a>
+               }
+             </div>
+            
+           </li>
+       </ul>
+      </div>
+    </div>
+   </nav>
+   
+   <mat-sidenav-container class="sidenav-container">
+     <mat-sidenav #sidenav class="sidenav" mode="side">
+       <div class="mt-2">
+        <a [routerLink]="['/projects']" routerLinkActive="active-link" (click)="sidenav.close()">
+          <button mat-button>
+            <mat-icon>folder</mat-icon>
+            <span class="hover:text-blue-400">Projects</span>
+          </button>
+        </a>
+        </div>
+     <div class="mt-2">
+      <a [routerLink]="['/employees']" routerLinkActive="active-link" (click)="sidenav.close()">
+        <button mat-button>
+          <mat-icon>person</mat-icon>
+          <span class="hover:text-blue-400">Employees</span>
+        </button>
+      </a>
+      </div>
+      <div class="mt-2">
+       
+          <div>
+              <mat-expansion-panel class="expansion-panel">
+                <mat-expansion-panel-header  class="expansion-panel-header">
+                  <mat-panel-title >
+                    <span class="white-color text-content">Select Your Project </span>
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                <mat-divider class="mat-divider"></mat-divider>
+                @for( menu of projectNames;track menu.id){
+                <mat-nav-list class="">
+                    <a mat-list-item [routerLink]="['/project-details', menu.project_name]">
+                    <mat-icon>assignment_turned_in</mat-icon>
+                    <span class="sub-menu screen-name">{{ menu.project_name }} </span>
+                    </a>
+                  </mat-nav-list>
+                }
+              </mat-expansion-panel>
+             
+          </div>
+        
+      </div>
+   </mat-sidenav>
+     <mat-sidenav-content>
+       <router-outlet></router-outlet>
+     </mat-sidenav-content>
+   </mat-sidenav-container>
+   

@@ -1,0 +1,61 @@
+<div fxLayout="column">
+    <div class="bg-orange-500 p-2" fxLayout="row" fxLayoutAlign="space-between center">
+        <span class="text-white text-lg">Project Details</span>
+        <div fxLayout="row" fxLayoutAlign="end center" class="text-white cursor-pointer">
+            <mat-icon matTooltip="Save">save</mat-icon>
+            <mat-icon (click)="onClose()" matTooltip="Close">close</mat-icon>
+        </div>
+    </div>
+</div>
+
+<div class="p-4">
+    <form [formGroup]="projectDetailsInputForm">
+        <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="25px">
+            <mat-form-field fxFlex="100" fxFlex.xs="100" appearance="fill">
+                <mat-label>Project Name</mat-label>
+                <input
+                  matInput
+                  formControlName="project_name"
+                  placeholder="Project Name"
+                />
+            </mat-form-field>
+
+            <mat-form-field fxFlex="100" fxFlex.xs="100" appearance="fill">
+                <mat-label>Project Manager</mat-label>
+                <mat-select formControlName="project_head" placeholder="Select Project Manager">
+                  <mat-option *ngFor="let manager of managers" [value]="manager.name">
+                    {{ manager.name }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              
+
+            <mat-form-field fxFlex="100" fxFlex.xs="100" appearance="fill">
+                <mat-label>Start Date</mat-label>
+                <input
+                  matInput
+                  formControlName="start_date"
+                  [matDatepicker]="startPicker"
+                  placeholder="Start Date"
+                />
+                <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+                <mat-datepicker #startPicker></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="100" fxFlex.xs="100" appearance="fill">
+                <mat-label>End Date</mat-label>
+                <input
+                  matInput
+                  formControlName="end_date"
+                  [matDatepicker]="endPicker"
+                  placeholder="End Date"
+                />
+                <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+                <mat-datepicker #endPicker></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="center center" >
+            <button mat-flat-button color="primary" (click)="onSave()">Save</button>
+        </div>
+    </form>
+</div>

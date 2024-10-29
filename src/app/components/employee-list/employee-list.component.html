@@ -1,0 +1,47 @@
+<div>
+    <div class="sticky top-0 bg-orange-500 text-white rounded-lg shadow-md flex items-center justify-between">
+        <div class="flex items-center space-x-4"> <!-- Added space-x-4 for spacing -->
+            <button mat-icon-button aria-label="Add Project" (click)="onBtStartEditing(0)">
+                <mat-icon>add_box</mat-icon>
+            </button>
+            <button mat-icon-button aria-label="Edit Project">
+                <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button aria-label="Delete Project">
+                <mat-icon>delete</mat-icon>
+            </button>
+            <button mat-icon-button aria-label="Save Project" (click)="onSave()">
+                <mat-icon>save</mat-icon>
+            </button>
+            <button mat-icon-button aria-label="Delete Project" (click)="refreshTable()">
+                <mat-icon>refresh</mat-icon>
+            </button>
+        </div>
+        <p class="text-lg text-center flex-1">Employee Data</p>
+    </div>
+</div>
+
+
+
+
+<div class="" style="height: 90%; width: 100%;">
+    <!-- @if (!loadSpinner) { -->
+    <ag-grid-angular
+      style="width: 100%; height: 60%;"
+      class="ag-theme-quartz"
+      [columnDefs]="columnDefs"
+      [rowData]="rowData"
+      [editType]="editType"
+      [rowSelection]="rowSelection"
+      [defaultColDef]="defaultColDef"
+      (cellValueChanged)="onCellValueChanged($event)"
+      (rowValueChanged)="onRowValueChanged($event)"
+      (gridReady)="onGridReady($event)"
+     >
+    </ag-grid-angular>
+<!-- } -->
+    @if (loadSpinner) {
+            <mat-spinner style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"></mat-spinner>
+    }
+  </div>
+  
