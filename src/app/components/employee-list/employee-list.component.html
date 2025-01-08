@@ -1,6 +1,6 @@
 <div>
-    <div class="sticky top-0 bg-orange-500 text-white rounded-lg shadow-md flex items-center justify-between">
-        <div class="flex items-center space-x-4"> <!-- Added space-x-4 for spacing -->
+    <!-- <div class="sticky top-0 bg-orange-500 text-white rounded-lg shadow-md flex items-center justify-between">
+        <div class="flex items-center space-x-4">
             <button mat-icon-button aria-label="Add Project" (click)="onBtStartEditing(0)">
                 <mat-icon>add_box</mat-icon>
             </button>
@@ -18,30 +18,183 @@
             </button>
         </div>
         <p class="text-lg text-center flex-1">Employee Data</p>
-    </div>
+    </div> -->
 </div>
 
 
 
 
-<div class="" style="height: 90%; width: 100%;">
-    <!-- @if (!loadSpinner) { -->
+<div  class="mt-12" style="height: 100%; width: 100%;">
+     @if(!username){
+      <div  class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>Session Expired!</strong> Your session is logged out. Please log in again.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      
+     }
+    <div class=" p-2">
+        <div class="bg-neutral-200 h-14 p-2 rounded-lg">
+            <div class="flex justify-between items-center">
+
+              <div class="flex items-center space-x-2">
+                <mat-icon class="icon text-orange-400">supervisor_account</mat-icon>
+                <p class="mt-2 font-semibold">Employees List</p>
+                <button mat-icon-button aria-label="Delete Project" (click)="refreshTable()">
+                  <mat-icon>refresh</mat-icon>
+              </button>
+              </div>
+              
+              <div class="search-bar flex items-center">
+                <input
+                  type="text"
+                  class="form-control me-2"
+                  placeholder="Search"
+                  [(ngModel)]="searchQuery"
+                />
+                <button
+                  class="btn btn-primary"
+                  [disabled]="!searchQuery"
+                >
+                  Search
+                </button>
+              </div>
+          
+              <div>
+                <button class="btn btn btn-warning btn-sm" (click)="openModel()" ><mat-icon class="mb-custom">add</mat-icon>Add Employee</button>
+              </div>
+            </div>
+          </div>
+    </div>
     <ag-grid-angular
-      style="width: 100%; height: 60%;"
+      style="width: 100%; height: 70%;"
       class="ag-theme-quartz"
       [columnDefs]="columnDefs"
       [rowData]="rowData"
-      [editType]="editType"
-      [rowSelection]="rowSelection"
       [defaultColDef]="defaultColDef"
-      (cellValueChanged)="onCellValueChanged($event)"
-      (rowValueChanged)="onRowValueChanged($event)"
+      (cellClicked)="onCellClicked($event)"
       (gridReady)="onGridReady($event)"
      >
     </ag-grid-angular>
-<!-- } -->
     @if (loadSpinner) {
             <mat-spinner style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"></mat-spinner>
     }
   </div>
-  
+
+  <!-- Modal -->
+  <div class="modal fade bd-example-modal-lg" #exampleModal >
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h6 class="modal-title" id="exampleModalLabel">New Employee Details</h6>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="employeeForm">
+              <div class="d-flex flex-wrap">
+                <div class="d-flex flex-column flex-grow-1 p-2" style="max-width: 33.33%;">
+                  <label for="name" class="form-label">Name</label>
+                  <input type="text" class="form-control" formControlName="name" required placeholder="Enter Name" id="name">
+                  @if(employeeForm.get('name')?.invalid && employeeForm.get('name')?.touched){
+                    <div class="text-danger">
+                      Name is required.
+                    </div>
+                  }
+                </div>
+                <div class="d-flex flex-column flex-grow-1 p-2" style="max-width: 33.33%;">
+                  <label for="designation" class="form-label">Designation</label>
+                  <select class="form-control" formControlName="designation" id="designation">
+                    <option value="" disabled selected>Select Designation</option>
+                    @for(designation of designations;track designation){
+                    <option [value]="designation">{{ designation }}</option>
+                    }
+                  </select>  
+                  @if(employeeForm.get('designation')?.invalid && employeeForm.get('designation')?.touched){
+                    <div class="text-danger">
+                      Designation is required.
+                    </div>
+                  }              
+                </div>
+                <div class="d-flex flex-column flex-grow-1 p-2" style="max-width: 33.33%;">
+                  <label for="department" class="form-label">Department</label>
+                  <select class="form-control" formControlName="department" id="department">
+                    <option value="" disabled selected>Select Department (Course)</option>
+                    @for(department of departments;track department){
+                      <option [value]="department">{{ department }}</option>
+                    }
+                  </select>  
+                  @if(employeeForm.get('department')?.invalid && employeeForm.get('department')?.touched){
+                    <div class="text-danger">
+                      Department is required.
+                    </div>
+                  }           
+                </div>
+              </div>
+
+              <div class="d-flex flex-wrap">
+                <div class="d-flex flex-column flex-grow-1 p-2" style="max-width: 33.33%;">
+                  <label for="email" class="form-label">Email</label>
+                  <input type="email" class="form-control" formControlName="email" placeholder="Enter Email" id="email">
+                  @if(employeeForm.get('email')?.invalid && employeeForm.get('email')?.touched){
+                    <div class="text-danger">
+                      Email is invalid!.
+                    </div>
+                  }    
+                </div>
+                <div class="d-flex flex-column flex-grow-1 p-2" style="max-width: 33.33%;">
+                  <label for="phoneNumber" class="form-label">Phone Number</label>
+                  <input type="text" class="form-control" formControlName="phoneNumber" placeholder="Enter Phone Number" id="phoneNumber">
+                  @if(employeeForm.get('phoneNumber')?.invalid && employeeForm.get('phoneNumber')?.touched){
+                    <div class="text-danger">
+                      Phone Number is invalid!.
+                    </div>
+                  } 
+                </div>
+                <div class="d-flex flex-column flex-grow-1 p-2" style="max-width: 33.33%;">
+                  <label for="createdOn" class="form-label">Created On</label>
+                  <input type="datetime-local" class="form-control" formControlName="createdOn" placeholder="Enter Created Date" id="createdOn" readonly>
+                </div>
+              </div>
+            
+              <div class="d-flex flex-wrap">
+                <div class="d-flex flex-column flex-grow-1 p-2" style="max-width: 33.33%;">
+                  <label for="created_by" class="form-label">Created By</label>
+                  <input type="text" class="form-control" formControlName="created_by" placeholder="Enter Creator's Name" id="created_by" readonly>
+                </div>
+                <div class="d-flex flex-column flex-grow-1 p-2" style="max-width: 33.33%;">
+                  <label for="modified_on" class="form-label">Modified On</label>
+                  <input type="datetime-local" class="form-control" formControlName="modified_on" placeholder="Enter Modified Date" id="modified_on" readonly>
+                </div>
+                <div class="d-flex flex-column flex-grow-1 p-2" style="max-width: 33.33%;">
+                  <label for="modified_by" class="form-label">Modified By</label>
+                  <input type="text" class="form-control" formControlName="modified_by" placeholder="Enter Modifier's Name" id="modified_by" readonly>
+                </div>
+              </div>
+
+              <div class="d-flex flex-column flex-grow-1 p-2">
+                <label for="image" class="form-label">Upload Image</label>
+                <input 
+                [disabled]="imagePreview"
+                  type="file" 
+                  class="form-control" 
+                  
+                  id="image" 
+                  (change)="onFileSelected($event)" 
+                  accept="image/*">
+                  @if(imageError){
+                    <small class="text-danger">{{ imageError }}</small>
+                  }
+                  @if(imagePreview){
+                    <div class="mt-2">
+                      <img [src]="imagePreview" alt="Image Preview" width="100" />
+                    </div>
+                  }
+              </div>
+             <!-- } -->
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="closeModel()" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" (click)="onSave()">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>

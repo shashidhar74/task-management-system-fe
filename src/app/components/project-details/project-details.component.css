@@ -16,9 +16,11 @@
 }
 
 .task-expansion-panel .mat-expansion-panel-header:hover {
-    background-color: #ff7b00; /* Darker orange on hover */
+    background-color: #ff7b00;
 }
-
+ ::ng-deep .mat-expansion-panel-body {
+  padding: 0px !important;
+}
 .form-filed-css{
 margin-left: 10px;
 }

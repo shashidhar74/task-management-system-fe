@@ -1,0 +1,137 @@
+.icon{
+    height: 35px;
+    font-size: 35px;
+    width: 40px;
+    padding: 2px;
+    box-shadow: 0 4px 10px gray;
+    border-radius: 5px;
+  }
+  mat-icon.mb-custom {
+    margin-bottom: -8px !important;
+  }
+  .modal-header{
+    padding: 5px !important;
+  }
+  .modal-title{
+    margin-bottom: 0px !important;
+    color:#ffc107;
+  }
+  .modal-body{
+    padding: 2px;
+  }
+  .modal-footer{
+    padding: 5px;
+  }
+
+  .form-label{
+    margin-bottom: 0px !important;
+    font-size: 14px;
+  }
+  input::placeholder, textarea::placeholder {
+    font-size: 12px;
+    color: #888; 
+  }
+
+select option:disabled {
+  color: #888;
+  font-size: 12px;
+}
+
+select {
+  font-size: 14px;
+}
+.card {
+    height: 240px;
+    width: 300px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 0px
+  }
+  ::ng-deep .mat-body-large p, 
+  ::ng-deep .mat-typography .mat-body-large p, 
+  ::ng-deep .mat-typography p {
+    margin: 0 !important; /* Set to 0 or another value you prefer */
+  }
+  .card-subtitle {
+    font-size: 1rem;
+  }
+  
+  .card-text {
+    font-size: 0.9rem;
+  }
+
+  
+  /* Card styling */
+  .custom-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    margin: 5px;
+  }
+  
+  .custom-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  }
+  
+  
+  .card-subtitle {
+    font-size: 1rem;
+    color: #6c757d;
+  }
+  
+  /* Badge Styling for status */
+  .badge {
+    /* padding: 0.4rem 0.8rem; */
+    font-size: 12px;
+    border-radius: 12px;
+  }
+  .task-line {
+    border-top: 2px solid #ddd;
+    margin: 2px 0;
+  }
+
+  .card-footer {
+    text-align: end;
+    background-color: white;
+    padding: 2px;
+  }
+  .badge-success {
+    background-color: #28a745;
+  }
+  
+  .badge-warning {
+    background-color: #ffc107;
+  }
+  
+  .badge-secondary {
+    background-color: #6c757d;
+  }
+  
+  /* Text styling inside cards */
+  .card-text {
+    font-size: 0.95rem;
+    color: #555;
+  }
+  
+  /* Footer and other spacing */
+  .card-text strong {
+    font-weight: 600;
+  }
+  
+  /* Card Image if you have any image */
+  .card img {
+    border-radius: 8px;
+    max-width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+  
+  

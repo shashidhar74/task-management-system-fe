@@ -1,4 +1,5 @@
-export interface TaskDetails {              
+export interface TaskDetails {  
+    taskId:String            
     projectName: string;
     taskName: string;
     owner: string;

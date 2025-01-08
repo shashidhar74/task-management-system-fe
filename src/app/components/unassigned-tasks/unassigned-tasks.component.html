@@ -1,0 +1,73 @@
+<div class="mt-12">
+    <div class=" p-2">
+        <div class="bg-neutral-200 h-14 p-2 rounded-lg">
+            <div class="flex justify-between items-center">
+
+              <div class="flex items-center space-x-2">
+                <mat-icon class="icon text-orange-400">assignment_late</mat-icon>
+                <p class="mt-2 font-semibold">Un Assigned Tasks</p>
+                <button mat-icon-button aria-label="Delete Project">
+                  <mat-icon>refresh</mat-icon>
+              </button>
+              </div>
+              
+              <div class="search-bar flex items-center">
+                <input
+                  type="text"
+                  class="form-control me-2"
+                  placeholder="Search"
+                />
+                <button
+                  class="btn btn-primary"
+                >
+                  Search
+                </button>
+              </div>
+          
+              <div>
+                <button class="btn btn btn-warning btn-sm"><mat-icon class="mb-custom">add</mat-icon>Add new task</button>
+              </div>
+            </div>
+          </div>
+    </div>
+
+    <div class="container mt-2">
+        <div class="row d-flex justify-content">
+            @for(task of rowData;track task){
+                <div class="card custom-card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <p class="card-title">{{ task?.taskId }} - {{ task.taskName }}</p>
+                            <p class="card-subtitle">
+                              <span class="badge" [ngClass]="{
+                                'badge-success': task.status === 'Open',
+                                'badge-warning': task.status === 'In Progress',
+                                'badge-secondary': task.status !== 'Open' && task.status !== 'In Progress'
+                              }">
+                                {{ task.status }}
+                              </span>
+                            </p>
+                          </div>
+                          <hr class="task-line">
+                        <p class="card-text">
+                            <strong>Priority:</strong> {{ task.priority }}<br>
+                            <strong>Task Name:</strong> {{ task.projectName }}<br>
+                            <strong>Start Date:</strong> {{ task.startDate | date:'short' }}<br>
+                            <strong>Due Date:</strong> {{ task.dueDate | date:'short' }}<br>
+                        </p>
+                        <p class="card-text">
+                            <strong>Created By:</strong> {{ task.createdBy }}<br>
+                            <strong>Modified By:</strong> {{ task.modifiedBy }}<br>
+                        </p>
+                        <div class="card-footer">
+                            <button class="btn btn btn-warning btn-sm"><mat-icon class="mb-custom">assignment_ind</mat-icon>Assign</button>
+                            <!-- Task created on: {{ task.createdOn | date:'short' }} -->
+                          </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+

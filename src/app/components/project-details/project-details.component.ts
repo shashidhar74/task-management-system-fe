@@ -5,7 +5,7 @@ import { TaskDetails } from '../../models/tasks';
 import { ServicesService } from '../../services/services.service';
 import { DatePipe } from '@angular/common';
 import { AgGridModule } from 'ag-grid-angular';
-import { ColDef } from 'ag-grid-community';
+import { ColDef, RowSelectionOptions } from 'ag-grid-community';
 import { MatIconModule } from '@angular/material/icon';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatButtonModule } from '@angular/material/button';
@@ -53,9 +53,12 @@ export class ProjectDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.columnDefs = this.createColumnDefs();
-    this.getProjectsData();
+    //this.getProjectsData();
     this.route.params.subscribe(params => {
       this.projectName = params['project_name'];
+      if(this.projectName){
+        this.getProjectsData();
+      }
       this.taskForm.get('projectName').setValue(this.projectName);
     });
     this.service.username$.subscribe(username => {
@@ -70,11 +73,16 @@ export class ProjectDetailsComponent implements OnInit {
     flex: 1,
     cellDataType: false,
   };
+  public rowSelection: RowSelectionOptions | "single" | "multiple" = {
+    mode: "multiRow",
+  };
   
   onGridReady(params: any) {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
   }
+
+
   private createColumnDefs() {
     return [
       { headerName: 'Task ID', field: 'taskId' },
@@ -93,12 +101,11 @@ export class ProjectDetailsComponent implements OnInit {
   }
 
   onSearchChange() {
-    // Implement ag-Grid API call to filter data based on searchTerm
-    // Assuming you have a grid API reference:
     if (this.gridApi) {
-      this.gridApi.setQuickFilter(this.searchTerm); // Use ag-Grid's quick filter
+      this.gridApi.setQuickFilter(this.searchTerm); 
     }
   }
+
 
   private dateFormatter(params: any) {
     return new Date(params.value).toLocaleDateString();
@@ -106,7 +113,7 @@ export class ProjectDetailsComponent implements OnInit {
 
   getProjectsData(){
     this.loadSpinner=true;
-    this.service.getAllTaks().subscribe({
+    this.service.getTasksByProjectName(this.projectName).subscribe({
       next : (response)=>{
         this.loadSpinner=false;
      this.rowData=response;
@@ -114,10 +121,16 @@ export class ProjectDetailsComponent implements OnInit {
     })
     }
 
+  //   openPanel(event: MouseEvent) {
+  //     event.stopPropagation(); // Prevent the click from closing the panel
+  //     this.expansionPanel.open();
+  // }
+  
+
     onSave() {
       if (this.taskForm.valid) { 
         this.loadSpinner=true;
-        const taskDetails: TaskDetails = this.taskForm.value; // Get the form values
+        const taskDetails: TaskDetails = this.taskForm.value; 
         this.service.addNewTask([taskDetails]).subscribe({
           next: (response) => {
             this.loadSpinner=false;

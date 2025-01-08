@@ -9,12 +9,13 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { ServicesService } from '../../services/services.service';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatListModule } from '@angular/material/list';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 //import { HomePageComponent } from '../../pages/home-page/home-page/home-page.component';
 
 @Component({
   selector: 'app-header-component',
   standalone: true,
-  imports: [AuthModule,MatIconModule,MatListModule,MatExpansionModule,MatButtonModule,MatMenuModule,RouterModule,MatSidenavModule],
+  imports: [AuthModule,NgbModule,MatIconModule,MatListModule,MatExpansionModule,MatButtonModule,MatMenuModule,RouterModule,MatSidenavModule],
   providers:[OidcSecurityService,HttpClient],
   templateUrl: './header-component.component.html',
   styleUrl: './header-component.component.css'
@@ -25,12 +26,14 @@ export class HeaderComponentComponent implements OnInit{
   isAuthenticated = false;
   username = "";
   projectNames:any=[];
+  userRoles: any[] = [];
   userInitials: string | undefined;
   ngOnInit(): void {
     this.oidcSecurityService.isAuthenticated$.subscribe(
       ({isAuthenticated})=>{
         this.isAuthenticated=isAuthenticated;
         this.getProjectsData();
+        this.getUserRoles();
       }
     )
     this.oidcSecurityService.userData$.subscribe(
@@ -66,5 +69,19 @@ export class HeaderComponentComponent implements OnInit{
       }
     })
     }
-  
+    getUserRoles(): any {
+      this.oidcSecurityService.getAccessToken().subscribe(token => {
+        if (token) {
+          const payload = this.getPayload(token);
+          this.userRoles = payload?.realm_access?.roles || [];
+        } else {
+          this.userRoles = [];
+        }
+      });
+    }
+    private getPayload(token: string): any {
+      const payload = token.split('.')[1];
+      return JSON.parse(atob(payload));
+    }
+    
 }

@@ -1,40 +1,35 @@
 <div class="p-2">
-    <div class="sticky top-0 pl-2 pr-2 bg-orange-500 text-white rounded-lg shadow-md flex items-center justify-between">
+    <div class="mt-16 pl-2 pr-2 bg-orange-500 text-white rounded-lg shadow-md flex items-center justify-between">
         <p class="text-lg  flex-1">{{projectName}}</p>
-<!-- 
-        <div class="search-container">
-            <mat-form-field class="flex-1 mx-2 search-field">
-                <mat-icon matPrefix class="search-icon">search</mat-icon>
-                <mat-label>Search Tasks</mat-label>
-                <input  placeholder="Search..." >
-            </mat-form-field>
-        </div> -->
-        
+
 
         <div class="flex items-center space-x-4">
-            <button mat-icon-button aria-label="Add Project">
-                <mat-icon>add_box</mat-icon>
-            </button>
-            <button mat-icon-button aria-label="Edit Project">
-                <mat-icon>edit</mat-icon>
-            </button>
-            <button mat-icon-button aria-label="Delete Project">
-                <mat-icon>delete</mat-icon>
-            </button>
-            <button mat-icon-button aria-label="Save Project" (click)="onSave()">
-                <mat-icon>save</mat-icon>
-            </button>
             <button mat-icon-button aria-label="Delete Project" >
                 <mat-icon>refresh</mat-icon>
             </button>
         </div>
     </div>
     <div class="p-2">
-        <mat-expansion-panel class="task-expansion-panel">
+        <mat-accordion>
+        <mat-expansion-panel class="task-expansion-panel" #expansionPanel>
             <mat-expansion-panel-header>
                 <mat-panel-title>
                     Add/Edit Task
                 </mat-panel-title>
+                <div class="flex items-center space-x-4">
+                    <button mat-icon-button aria-label="Add Project" (click)="expansionPanel.open()">
+                        <mat-icon>add_box</mat-icon>
+                    </button>
+                    <button mat-icon-button aria-label="Edit Project">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-icon-button aria-label="Delete Project">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                    <button mat-icon-button aria-label="Save Project" (click)="onSave()">
+                        <mat-icon>save</mat-icon>
+                    </button>
+                </div>
             </mat-expansion-panel-header>
         
             <form [formGroup]="taskForm">
@@ -103,6 +98,7 @@
                 </div>
             </form>
         </mat-expansion-panel>
+    </mat-accordion>
         
     </div>
 <div style="height: 90%; width: 100%;"> 
@@ -112,6 +108,7 @@
   [columnDefs]="columnDefs"
   [defaultColDef]="defaultColDef"
   [rowData]="rowData"
+  [rowSelection]="rowSelection"
   (gridReady)="onGridReady($event)"
   [pagination]="true"
   [paginationPageSize]="20">

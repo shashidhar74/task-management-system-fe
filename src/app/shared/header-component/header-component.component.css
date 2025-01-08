@@ -10,21 +10,29 @@
 }
 
 .sidenav-container {
-  height: 90%;
+  height: 100%;
 }
 
 .sidenav {
-  width: 175px;
-  background-color: #f5d0fe;
+  width: 260px;
+  background: url('/src/assets/sidebar-3.jpg') no-repeat center center;
+  box-shadow: 0 4px 20px 0 rgba(0, 0, 0, .14), 0 7px 10px -5px rgba(244, 67, 54, .4);
 }
 
 .active-link {
-  border: 2px solid #4a044e;
-  border-radius: 20px; 
-  padding: 8px;
-  background-color: #dfc9e0; 
+  color: white !important;
+  border-radius: 4px; 
+  transition: all 0.15s ease;
+  padding: 2px;
+  border-bottom: 3px solid #fd7e14;
+}
+.shadow-purple-lg {
+  box-shadow: 0 4px 10px rgba(128, 0, 128, 0.3);  
 }
 
+.nav-section{
+margin: auto;
+}
 .expansion-panel{
   width:170px;
 }
@@ -35,4 +43,46 @@
 }
 .mat-expansion-panel-body{
   padding: 0px 0px 0px !important;
+}
+.logo-section {
+  display: flex;
+  align-items: center;
+}
+mat-sidenav {
+  border-radius: 0 !important;
+}
+/* mat-sidenav a button{
+ color: #fff !important;
+} */
+.content-margin p{
+  border-top: 2px solid gray ;
+}
+.content-margin {
+margin-left: 270px !important;
+  margin-top: 10px;
+}
+.nav-bar{
+  margin-left: 50px;
+}
+/* .logo-section {
+  display: flex;
+  align-items: center;
+  border-radius: 8px;
+  margin-right: -10px;
+} */
+
+.logo-icon {
+  font-size:30px; /* Make the icon larger */
+  color: #fd7e14; /* Give the icon a vibrant color */
+  margin-top: -10px; /* Space between icon and text */
+  height:70px;
+  width:80px
+}
+
+.sidebar-heading {
+  font-weight: 600; /* Make the font bold */
+  margin: 0; /* Remove default margin */
+  color:#fff;
+  text-transform: uppercase; /* Make the text uppercase */
+  letter-spacing: 2px; /* Add space between letters for a modern look */
 }

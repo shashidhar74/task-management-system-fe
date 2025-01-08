@@ -1,51 +1,67 @@
 
-  <nav class="bg-fuchsia-950 border border-fuchsia-950 px-2 sm:px-4 py-2.5  h-13 shadow">
-    <div class="container flex flex-wrap justify-between items-center ">
-     <div>
-       @if (isAuthenticated) {
-         <button mat-mini-fab  (click)="sidenav.toggle()"><mat-icon>menu</mat-icon></button>
-       }
-       <a href="/" class=" items-center">
-         <span class="self-center text-xl font-bold whitespace-nowrap text-white">
-           Task Management System
-         </span>
-           </a>
-     </div>
-    
-         <div class="w-full md:block md:w-auto hidden" id="mobile-menu">
-       <ul class="flex flex-col mt-4 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium">
-           <li>
-             <div fxLayout="row" fxLayoutAlign="center center" class="profile-detail" fxLayoutGap="15px">
-               @if (isAuthenticated) {
-                 <div  fxLayout="column">
-                   <button mat-fab class="profile-fab primary-color" [matMenuTriggerFor]="profileMenu">{{userInitials}}</button>
-                   <span class="text-white"> Welcome {{username}}</span>
-                 </div>
-                   
-                 <mat-menu #profileMenu="matMenu">
-                   <button mat-menu-item (click)="logout()">
-                     <mat-icon>settings_power</mat-icon>Log off
-                   </button>
-                 </mat-menu>
-               }@else {
-                 <a
-                   (click)="login()"
-                   class="block py-2 pr-4 pl-3 text-white hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">
-                   Login
-                 </a>
-               }
-             </div>
-            
-           </li>
-       </ul>
+<nav class="bg-purple-600 border border-fuchsia-950 sm:px-4 h-12 shadow fixed top-0 left-0 w-full z-50">
+  <div class="flex flex-wrap justify-between items-center">
+    <!-- Logo Section -->
+    <div>
+      @if (isAuthenticated) {
+        <div class="logo-section flex items-center">
+          <img class="logo-icon w-8 h-8" src="assets/3d-task.webp" alt="TaskHub Logo">
+          <p class="sidebar-heading text-white ml-2">TaskHub</p>
+        </div>
+      }
+    </div>
+
+    <!-- Icons Section: Flex Container -->
+    <div class="flex flex-grow justify-end space-x-4 mr-4 mb-2 sm:space-x-6">
+        <div class="flex space-x-10 mr-14 shadow-purple-lg p-1 rounded-md">
+          <a routerLink="/employees" routerLinkActive="active-link" class="flex items-center space-x-2">
+            <mat-icon class="text-orange-400" aria-hidden="true">supervisor_account</mat-icon>
+            <span>Employees</span>
+          </a>
+
+          <a routerLink="/projects" routerLinkActive="active-link" class="flex items-center space-x-2">
+            <mat-icon class="text-orange-400" aria-hidden="true">book</mat-icon>
+            <span>Projects</span>
+          </a>
+
+          <a routerLink="/unassignedtasks" routerLinkActive="active-link" class="flex items-center space-x-2">
+            <mat-icon class="text-orange-400" aria-hidden="true">assignment_late</mat-icon>
+            <span>Un Assigned Tasks</span>
+          </a>
+        </div>
+      
+      <!-- Profile and login buttons (visible only on smaller screens) -->
+      <div class="flex items-center space-x-3">
+        @if (isAuthenticated) {
+          <div fxLayout="column" class="flex items-center">
+            <span class="text-white">{{username}}</span>
+            <button mat-fab class="profile-fab primary-color" [matMenuTriggerFor]="profileMenu">{{userInitials}}</button>
+          </div>
+          <mat-menu #profileMenu="matMenu">
+            <button mat-menu-item (click)="logout()">
+              <mat-icon>settings_power</mat-icon>Log off
+            </button>
+          </mat-menu>
+        } @else {
+          <mat-icon (click)="login()" class="text-white cursor-pointer" aria-hidden="true">account_circle</mat-icon>
+        }
       </div>
     </div>
-   </nav>
+  </div>
+</nav>
+<!-- <div class="pt-12"> -->
+  <router-outlet></router-outlet>
+<!-- </div> -->
    
-   <mat-sidenav-container class="sidenav-container">
-     <mat-sidenav #sidenav class="sidenav" mode="side">
+   <!-- <mat-sidenav-container class="sidenav-container">
+     <mat-sidenav #sidenav class="sidenav" mode="side" [opened]="true">
+      <div class="logo-section">
+        <mat-icon class="logo-icon">receipt</mat-icon>
+        <p class="sidebar-heading">TaskHub</p>
+      </div>
+      
        <div class="mt-2">
-        <a [routerLink]="['/projects']" routerLinkActive="active-link" (click)="sidenav.close()">
+        <a [routerLink]="['/projects']" routerLinkActive="active-link">
           <button mat-button>
             <mat-icon>folder</mat-icon>
             <span class="hover:text-blue-400">Projects</span>
@@ -53,7 +69,7 @@
         </a>
         </div>
      <div class="mt-2">
-      <a [routerLink]="['/employees']" routerLinkActive="active-link" (click)="sidenav.close()">
+      <a [routerLink]="['/employees']" routerLinkActive="active-link">
         <button mat-button>
           <mat-icon>person</mat-icon>
           <span class="hover:text-blue-400">Employees</span>
@@ -81,11 +97,10 @@
               </mat-expansion-panel>
              
           </div>
-        
       </div>
    </mat-sidenav>
-     <mat-sidenav-content>
+     <mat-sidenav-content class="content-margin">
        <router-outlet></router-outlet>
      </mat-sidenav-content>
    </mat-sidenav-container>
-   
+    -->
